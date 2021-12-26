@@ -1,4 +1,4 @@
-ersion: "3.8"
+Version: "3.8"
 services:
   ldap:
     image: balenabalena/ldap21:grups

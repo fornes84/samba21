@@ -47,20 +47,21 @@ Fem servir l'arxiu de configuració smb.alone.conf (testparm per provar que l'ar
 ---------------------------------
 
 smb21:stand-alone
- --> ipPUBLICA: 13.38.28.221
+ --> ip PUBLICA del EC2: 13.38.28.221
 
 1er: Llançarem una instancia AWS on habilitarem a les regles --> Security group reules, obrim els d'entrada 389 LDAP, 22 SSH, SAMBA 445 i 139
-i 2022 (admin es l'usuari per defecte en AMI Debian) Ens conectem via ssh desdel nostre PC a la AMI mitjançant la clau privada ssh -i ~/noseque.pem admin@IP_AMI (hem de treure permisos al fitxer on es guarda la clau privada pq nomes pugui llegir/escriure el propietari --> chmod 600 XXX.pem
+i 2022 (admin es l'usuari per defecte en AMI Debian i per a Windows depen del idioma ) Ens conectem via ssh des del nostre PC a la AMI mitjançant la clau privada ssh -i ~/noseque.pem admin@IpAmi (hem de treure permisos al fitxer on es guarda la clau privada pq nomes pugui llegir/escriure el propietari --> chmod 600 XXX.pem
 
 Instal·lem docker --> https://docs.docker.com/engine/install/debian/ i docker compose --> https://docs.docker.com/compose/install/
 
 docker-compose --version
 
-Exeutem docker compose amb el fitx .ylm de la clase pasada, per llançar els 2 dockers (LDAP i no recordo) (cada un obrint els ports corresponents).
+Exeutem docker compose amb el fitx .ylm de la clase pasada, per llançar els 2 dockers (LDAP,SAMBA,PAM?) (cada un obrint els ports corresponents).
 
-sudo docker compose up -d (previament compiem a la AMI el .yml) (sudo docker-compose down)
+sudo docker compose up -d (previament compiem a la AMI el .yml -->  scp) (sudo docker-compose down, desmontar-ho tot)
 
 Instal·lem també el ldap-utils, i nmap a la AMI per fer consultes.
+També instal·lem (lógicament) el client samba (samba-client)
 
 Verifiquem que desde la AMI podem fer ldapsearch.. ldapsearch -x -h localhost -LLL -b 'dc=edt,dc=org' (comprovació LDAP) i comprovem que podem conectar-nos via ssh de la AMI al docker: Verifiquem la connexió SSH amb els usuaris unix per el port 2022:
 
@@ -70,4 +71,6 @@ Comprobem que tenim bé la connexió SSH amb els usuaris LDAP per el port 2022:
 
 ssh -p 2022 marta1@localhost
 
-i ara provem desde 'fora' (des del nostre PC) cap a la AMI: Comprobem que podem fer consultes LDAP: ldapsearch -x -h 'IP_+AMAZON' -LLL -b 'dc=edt,dc=org'
+i ara provem desde 'fora' (des del nostre PC) cap a la AMI: Comprobem que podem fer consultes LDAP: 
+
+ldapsearch -x -h 'IP_+AMAZON' -LLL -b 'dc=edt,dc=org', després ens loggejarem via ssh amb usuari p.e marta cap a XXXX  i hem de tenir compartit el contigut del home de marta, que està al servidor SAMBA.
