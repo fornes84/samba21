@@ -1,46 +1,46 @@
-# SAMBA server
-## Rubén Rodríguez ASIX M06-ASO 2021-2022
+Escola del Treball, Administració de Sistemas Operatius
+SAMBA 20-21
+Marc Fornés Hospital
 
-Imatges docker al DockerHub de [edtasixm06](https://hub.docker.com/u/edtasixm06/)
+Utilitzarem SAMBA (protocol  cifs) per administrar els homes d'una maquina virtual Windows, segur ?????
 
-Documentació del mòdul a [ASIX-M06](https://sites.google.com/site/asixm06edt/)
+Paquets: 
+samba 
+samba-client
 
-ASIX M06-ASO Escola del treball de barcelona
+Ordres:
 
-### SAMBA Containers:
+docker run --rm --name ldap.edt.org -h ldap.edt.org --net 2hisix -d balenabalena/ldap21:grups
+docker run --rm --name pam.edt.org -h pam.edt.prg --net 2hisix --privileged -it balenabalena/pam21:ldap /bin/bash
+docker run --rm --name smb.edt.org -h smb.edt.org --net 2hisix -p 445:445 -p 139:139 --privileged -it balenabalena/samba21:base /bin/bash
 
- * **rubeeenrg/samba21:base** 
+i un cop configurat SAMBA, l'obirem en detach:
+docker run --rm --name smb.edt.org -h smb.edt.org --net 2hisix -p 445:445 -p 139 --privilieged -d balenabalena/samba21:base
+(i executar a mà el script)
 
-#### Documentació:
-Executarem l'startup amb bash:
+Per això tindrem:
+	-una mini maq virutal EC2 (AWS) on desplegarem els 3 dockers segünets?
+	-el docker fent de servidor de base de dades LDAP amb tots els usuaris (marta,pere..)
+	-el docker fent de servidor PAM per authentificar
+	-el docker fent de servidor SAMBA (aquí ens conectarem ssh per provar que tot funciona)
 
-```
-bash startup
-```
+també podriem utilitzar docker-compose !!!
 
-Per temes de broadcast amb Windows, 'smbtree' pot no funcionar, llavors, farem la següent ordre desde el propi servidor per comprovar que esta funcionant tot, quan demani password, pulsem 'ENTER'.
+Al arrancar el SAMBA aquest hauria d'executar el script de crear tots els usuaris SAMBA i posarlis el password SAMBA.
+S'han d'executar el serveis smbd (dimoni de shares) i nmd (dimoni de noms) 
 
-```
-smbclient -L localhost
-smbclient -L smb
-```
+(Per provar els fitxers de conf escriure --> testparm i si tot va bé llistarà els recusos compartits)
 
-Iniciem sessió com a pere en el nostre client, llistem els recursos compartits i comprobem la connexió amb 'smbclient':
+Es vol aconseguir el següent:
 
-```
-su - pere
-smbclient -L 172.18.0.2
-```
+Activitat 3.
 
-Entrem als recursos compartits desde l'usuari 'pere':
+­Es presentarà un document on es resoldran les següents qüestions:
 
-```
-smbclient //172.18.0.2/doc
-```
+	● Configuració del servidor SAMBA per a accés autentificat.
+	● Usuaris i contrasenyes a SAMBA.
+	● Directoris HOME i configuració per l’accés a recursos compartits pel grup.
+	● Comprovació de l’accés als recursos compartits.
 
-``` 
-docker run --rm --name ldap.edt.org -h ldap.edt.org --net 2hisix -d rubeeenrg/ldap21:groups
-docker run --rm --name pam.edt.org -h pam.edt.prg --net 2hisix --privileged -it rubeeenrg/pam21:ldap /bin/bash
-docker run --rm --name smb.edt.org -h smb.edt.org --net 2hisix -p 445:445 -p 139:139 --privileged -it rubeeenrg/samba21:base /bin/bash
-```
+Fem servir l'arxiu de configuració smb.alone.conf (testparm per provar que l'arxiu ok)
 
