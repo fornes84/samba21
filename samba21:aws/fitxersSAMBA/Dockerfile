@@ -1,4 +1,4 @@
-# samba_server
+# Dockerfile de samba_server
 FROM debian:latest
 LABEL version="1.0"
 LABEL author="@edt ASIX-M06"

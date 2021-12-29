@@ -9,6 +9,7 @@ services:
       - "636:636"
     networks:
      - 2hisix
+    restart: always
   samba:
     image: balenabalena/samba21:stand-alone
     container_name: smb.edt.org
@@ -18,9 +19,5 @@ services:
       - "139:139"
     networks:
      - 2hisix
-  pam:
-    image: balenabalena/pam21:ldap
-    containername: pam.ed.org
-    hostname: balenabalena/pam21:ldap
-    networks: 
-      - 2hisix
+    restart: always
+
