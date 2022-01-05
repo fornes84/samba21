@@ -22,12 +22,15 @@ groupadd WinUsers
 groupadd WinGuests
 groupadd WinBackupOperators
 groupadd WinRestoreOperators
-
+groupadd UserHomes
 # -g GRUP principal, -G grup secundari
 
 usermod -g WinAdmins -G WinUsers pere
 usermod -g WinBackupOperators -G WinUsers pau
 usermod -g WinRestoreOperators -G WinUsers anna
+usermod -G UserHomes pau
+usermod -G UserHomes pere
+usermod -G UserHomes anna
 
 #Copiem config
 cp smb.alone.conf /etc/samba/smb.conf

@@ -2,7 +2,6 @@ Escola del Treball, Administració de Sistemas Operatius
 SAMBA 20-21
 Marc Fornés Hospital
 
-Utilitzarem SAMBA (protocol  cifs) per administrar els homes d'una maquina virtual Windows, segur ?????
 
 Paquets: 
 samba 
@@ -12,7 +11,7 @@ Ordres:
 
 docker run --rm --name ldap.edt.org -h ldap.edt.org --net 2hisix -d balenabalena/ldap21:grups
 docker run --rm --name pam.edt.org -h pam.edt.prg --net 2hisix --privileged -it balenabalena/pam21:ldap /bin/bash
-docker run --rm --name smb.edt.org -h smb.edt.org --net 2hisix -p 445:445 -p 139:139 --privileged -it balenabalena/samba21:base /bin/bash
+docker run --rm --name smb.edt.org -h smb.edt.org --net 2hisix -p 445:445 -p 139:139 --privileged -it balenabalena/samba21:stand-alone /bin/bash
 
 i un cop configurat SAMBA, l'obirem en detach:
 docker run --rm --name smb.edt.org -h smb.edt.org --net 2hisix -p 445:445 -p 139 --privilieged -d balenabalena/samba21:base
@@ -29,8 +28,12 @@ també podriem utilitzar docker-compose !!!
 Al arrancar el SAMBA aquest hauria d'executar el script de crear tots els usuaris SAMBA i posarlis el password SAMBA.
 S'han d'executar el serveis smbd (dimoni de shares) i nmd (dimoni de noms) 
 
+PROVES:
+---------------------------------------------------------------------------
 (Per provar els fitxers de conf escriure --> testparm i si tot va bé llistarà els recusos compartits)
 
+PER MIRAR USUARIS SAMBA : pdbedit
+---------------------------------------------------------------------------
 Es vol aconseguir el següent:
 
 Activitat 3.

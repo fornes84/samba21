@@ -14,7 +14,7 @@ Ordres en el servidor EC2 (desplegarem SAMBA i LDAP):
   docker run --rm --name smb.edt.org -h smb.edt.org --net 2hisix -p 445:445 -p 139:139 -p 2200:22 --privileged -it balenabalena/samba21:base /bin/bash
 
 Ordres que executarem desde del nostre host (desplegarem el docker PAM)
-  docker run --rm --name pam.edt.org -h pam.edt.prg --net 2hisix --privileged -it balenabalena/pam21:ldap /bin/bash
+  docker run --rm --name pam.edt.org -h pam.edt.prg --net 2hisix --privileged -it balenabalena/pam21:ldap /bin/bash (hem d'isntalar el cifs-utils)
 
 un cop configurat SAMBA, l'obirem en detach (i executar a mà el script si no funciona)
 
@@ -36,6 +36,7 @@ I "pere" ha d'estar habilitat en el servidor SAMBA com a autoritzat a veure/util
 
 su - pere
 smbclient -L 172.XX.0.XX
+
 
 ---------------------------------
 
