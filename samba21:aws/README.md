@@ -41,10 +41,13 @@ smbclient -L 172.XX.0.XX
 ---------------------------------
 
 PROCÉS CLIENT:
-El client PAM has de configurar el PAM mount perquè en lloc de muntar els shares via sshfs els munti via SAMBAi
+El client PAM has de configurar el PAM mount perquè en lloc de muntar els shares via sshfs els munti via SAMBA (/etc/security/pam_mount.conf.xml)
 
-També s'ha d'instalar el samba-client
+També s'ha d'instalar els paquets samba-client i cifs-utils
 
+Cal executar el script per tenir els directoris de tots els homes dels usuaris LDAP
+
+Cal tenir conexió a LDAP per tal que ?¿?¿
 
 --------------------------------------------------------
 
@@ -63,10 +66,13 @@ docker-compose --version
 
 Excutem docker compose amb el fitxer .ylm , per llançar els 2 dockers (LDAP,SAMBA) (cada un obrint els ports corresponents).
 
-sudo docker compose up -d (previament compiem a la AMI el .yml -->  scp) (sudo docker-compose down, desmontar-ho tot)
+Compiem a la AMI el .yml -->  amb scp root@IP:path_on_estigui_el_fitxer /var/tmp
+ 
+sudo docker compose up -d
+(sudo docker-compose down, desmontar-ho tot)
 
 Instal·lem també el ldap-utils, i nmap a la AMI per fer consultes.
-També instal·lem (lógicament) el client samba (samba-client)
+També instal·lem (lógicament) el client samba (samba-client) i el cifs-utils(per poder montar els home d'un recurs)
 
 Verifiquem que desde la AMI podem fer ldapsearch.. ldapsearch -x -h localhost -LLL -b 'dc=edt,dc=org' (comprovació LDAP) i comprovem que podem conectar-nos via ssh de la AMI al docker: Verifiquem la connexió SSH amb els usuaris unix per el port 22. (segur?)
 
