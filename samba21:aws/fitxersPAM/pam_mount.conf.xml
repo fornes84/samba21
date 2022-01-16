@@ -55,13 +55,12 @@
      -->
 
 <volume 
-	options="user=%(DOMAIN_USER),domain=DOMAIN"
-	user="*"
-		fstype="cifs" 
-		server="172.19.0.4" 
-		path="%(DOMAIN_USER)" 
-		mountpoint="/home/%(USER)"
-/>
+       user="*"
+       fstype="cifs" 
+       server="172.18.0.4" 
+       path="%(USER)" 
+       mountpoint="~/%(USER)"
+    />	
 
 <!--
 <fusemount>mount.fuse3 %(VOLUME) %(MNTPT) -o %(OPTIONS)</fusemount>

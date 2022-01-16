@@ -53,8 +53,6 @@ done
 
 # UN COP CREATS ELS AFEGIM PQ TINGUIN ACCESSx AL SERVIDOR SAMBA 
 
-#echo -e "pere\npere" | smbpasswd -a -s pere
-#echo -e "pau\npau" | smbpasswd -a -s pau
 #echo -e "anna\nanna" | smbpasswd -a -s anna
 
 # echo -e "pere\npere" --> Envia un doble pere amb un salt de line entre els 2 i fa pipe amb posar un passwd samba (que demana 2 vegades el pass)
