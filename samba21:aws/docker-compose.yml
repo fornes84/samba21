@@ -6,7 +6,6 @@ services:
     hostname: ldap.edt.org
     ports: 
       - "389:389"
-      - "636:636"
     networks:
      - 2hisix
     restart: always
@@ -17,6 +16,8 @@ services:
     ports:
       - "445:445"
       - "139:139"
+      - "22:2200"
+        
     networks:
      - 2hisix
     restart: always

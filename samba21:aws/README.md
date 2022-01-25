@@ -27,7 +27,7 @@ quan tot funcioni utilitzarem docker-compose per tenir el despelgament automatit
 
 Al arrancar el SAMBA aquest hauria d'executar el script de crear tots els usuaris SAMBA i posarlis el password SAMBA. Exactament igual passa amb els homes del servidor LDAP que amb un escript s'han de crear i ja que estem copiar algo en cadascun.
 
-S'han d'executar el serveis smbd (dimoni de shares) i nmd (dimoni de noms) 
+S'han d'executar el serveis smbd (dimoni de shares) i nmbd (dimoni de noms) 
 
 Fem servir l'arxiu de configuració smb.alone.conf (testparm per provar que l'arxiu ok i llistarà els recursos comp)
 
@@ -47,7 +47,8 @@ També s'ha d'instalar els paquets samba-client i cifs-utils
 
 Cal executar el script per tenir els directoris de tots els homes dels usuaris LDAP
 
-Cal tenir conexió a LDAP per tal que ?¿?¿
+El client ha de tenir conexió a LDAP per tal que reconeixi el usuaris LDAP
+(nscd,nslcd)
 
 --------------------------------------------------------
 
@@ -58,15 +59,33 @@ smb21:aws
 
 1er: Llançarem una instancia AWS on habilitarem a les regles --> Security group reules, obrim els d'entrada 389 LDAP, 22 SSH, SAMBA 445 i 139
 i 2022 (admin es l'usuari per defecte en AMI Debian i per a Windows depen del idioma ) Ens conectem via ssh des del nostre PC a la AMI mitjançant la clau privada,
-ssh -i ~/noseque.pem admin@IpAmi             (hem de treure permisos al fitxer on es guarda la clau privada pq nomes pugui llegir/escriure el propietari --> chmod 600 XXX.pem
+ssh -i ~/noseque.pem admin@IpAmi             (hem de treure permisos al fitxer on es guarda la clau privada pq nomes pugui llegir/escriure el propietari --> chmod 400 XXX.pem
 
-Instal·lem docker --> https://docs.docker.com/engine/install/debian/ i docker compose --> https://docs.docker.com/compose/install/
+Instal·lem docker --> 
+https://docs.docker.com/engine/install/debian/ 
 
-docker-compose --version
+i docker compose --> 
+https://docs.docker.com/compose/install/
+
+sudo docker-compose --version
 
 Excutem docker compose amb el fitxer .ylm , per llançar els 2 dockers (LDAP,SAMBA) (cada un obrint els ports corresponents).
 
 Compiem a la AMI el .yml -->  amb scp root@IP:path_on_estigui_el_fitxer /var/tmp
+
+També copiem per emular un client desde la maquin AWS
+
+scp -i ~/.ssh/labsuser.pem -r pam21_ldap admin@44.195.67.63:/opt/docker
+
+
+
+FET AIXO PODEM EXECUTAR EL SCRIPT A CLIENT PER TAL DE TENIR TOTS EL ARXIUS DE CONF NECESARITS
+
+Hem de cambiar el pam_mount.conf.xml pq apunti a la IP d'AMAZON.
+
+Creem la xarxa ? no cal docker-compose ja la crea !!
+
+	sudo docker network create 2hisix
  
 sudo docker compose up -d
 (sudo docker-compose down, desmontar-ho tot)
