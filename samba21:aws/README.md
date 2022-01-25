@@ -83,6 +83,13 @@ FET AIXO PODEM EXECUTAR EL SCRIPT A CLIENT PER TAL DE TENIR TOTS EL ARXIUS DE CO
 
 Hem de cambiar el pam_mount.conf.xml pq apunti a la IP d'AMAZON.
 
+També hem d'afegir el ldap.edt.org IP QUESIGUI PER TENIR ACCES A LDAP
+
+3.239.247.153	ldap.edt.org
+3.239.247.154	smb.edt.org
+
+
+
 Creem la xarxa ? no cal docker-compose ja la crea !!
 
 	sudo docker network create 2hisix
