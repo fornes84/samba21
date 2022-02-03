@@ -16,7 +16,6 @@ services:
     ports:
       - "445:445"
       - "139:139"
-      - "22:2200"
         
     networks:
      - 2hisix
