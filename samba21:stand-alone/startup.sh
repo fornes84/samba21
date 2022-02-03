@@ -80,8 +80,7 @@ cp smb.alone.conf /etc/samba/smb.conf
 
 # Obrim servies:
 /usr/sbin/smbd 
-/usr/sbin/nmbd 
-#-F
+/usr/sbin/nmbd -F
 
 #/usr/sbin/smbd 
 #/usr/sbin/nmbd 
